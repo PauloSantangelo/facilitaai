@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Criar Perfil</title>
+</head>
+<body>
+    <h1>Criar Novo Perfil</h1>
+    <form method="POST">
+        <label for="profile_name">Nome do Perfil:</label>
+        <input type="text" name="profile_name" id="profile_name" required>
+        <br>
+        <label for="description">Descrição do Perfil:</label>
+        <textarea name="description" id="description" required></textarea>
+        <br>
+        <button type="submit">Criar Perfil</button>
+    </form>
+    <br>
+    <a href="{{ url_for('home') }}">Voltar</a>
+</body>
+</html>

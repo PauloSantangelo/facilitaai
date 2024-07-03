@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Gerador de Legendas para Instagram</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body {
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input[type="file"],
+        select,
+        input[type="submit"] {
+            display: block;
+            margin-top: 10px;
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="submit"] {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #218838;
+        }
+        .profile {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .profile h3 {
+            margin: 0 0 5px 0;
+        }
+        .profile-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            align-items: center; /* Para alinhar verticalmente */
+        }
+        .profile-actions .btn {
+            padding: 10px 20px;
+            text-align: center;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+            flex-grow: 0;
+            display: inline-block;
+            height: 40px; /* Set a fixed height */
+            line-height: 20px; /* Vertically center text */
+        }
+        .profile-actions .btn-edit {
+            background-color: #007bff;
+        }
+        .profile-actions .btn-edit:hover {
+            background-color: #0056b3;
+        }
+        .profile-actions .btn-delete {
+            background-color: #dc3545;
+            border: none; /* Remover a borda */
+            cursor: pointer;
+            padding: 10px 20px; /* Ajustar o padding */
+            border-radius: 5px; /* Manter o raio de borda */
+        }
+        .profile-actions .btn-delete:hover {
+            background-color: #c82333;
+        }
+        .add-profile {
+            display: block;
+            margin-top: 20px;
+            background-color: #17a2b8;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .add-profile:hover {
+            background-color: #138496;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Gerador de Legendas para Instagram</h1>
+        </div>
+        <form method="post" enctype="multipart/form-data">
+            <label for="profile">Selecione um perfil:</label>
+            <select name="profile" id="profile">
+                {% for name in profiles %}
+                <option value="{{ name }}">{{ name }}</option>
+                {% endfor %}
+            </select>
+            <label for="file">Carregar Arquivo:</label>
+            <input type="file" name="file" id="file" required>
+            <input type="submit" value="Gerar Legenda">
+        </form>
+        <h2>Perfis</h2>
+        {% for name, description in profiles.items() %}
+        <div class="profile">
+            <h3>{{ name }}</h3>
+            <p>{{ description }}</p>
+            <div class="profile-actions">
+                <a href="{{ url_for('edit_profile', profile_name=name) }}" class="btn btn-edit">Editar</a>
+                <form action="{{ url_for('delete_profile', profile_name=name) }}" method="post">
+                    <input type="submit" value="Excluir" class="btn btn-delete">
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+        <a href="{{ url_for('add_profile') }}" class="add-profile">Adicionar Novo Perfil</a>
+    </div>
+</body>
+</html>

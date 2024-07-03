@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center; /* Centraliza todo o conteúdo */
+        }
+        .caption {
+            margin-bottom: 20px;
+        }
+        .caption h2 {
+            margin-bottom: 10px;
+            font-size: 24px;
+            color: #333;
+        }
+        .caption p {
+            text-align: justify;
+            margin: 0 0 10px; /* Espaçamento abaixo de cada parágrafo */
+        }
+        .media-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .media-container img, .media-container video {
+            max-width: 50%;
+            height: auto;
+            border-radius: 5px; /* Adiciona bordas arredondadas */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adiciona sombra suave */
+        }
+        .back-button {
+            margin-top: 30px;
+        }
+        .back-button a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .back-button a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="caption">
+        <h2>Legenda Gerada:</h2>
+        {% for paragraph in caption.split('\n\n') %}
+            <p>{{ paragraph }}</p>
+        {% endfor %}
+    </div>
+    <div class="media-container">
+        {% if media_type == 'image' %}
+            <img src="{{ url_for('static', filename='uploads/' + media_url) }}" alt="Imagem">
+        {% elif media_type == 'video' %}
+            <video controls>
+                <source src="{{ url_for('static', filename='uploads/' + media_url) }}" type="video/mp4">
+                Seu navegador não suporta vídeo HTML5.
+            </video>
+        {% else %}
+            <p>Formato de mídia não suportado.</p>
+        {% endif %}
+    </div>
+    <div class="back-button">
+        <a href="/" class="button">Voltar para a página inicial</a>
+    </div>
+</body>
+</html>
